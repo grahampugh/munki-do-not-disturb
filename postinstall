@@ -1,0 +1,25 @@
+#!/bin/bash
+
+TITLE=MSC-Do-Not-Disturb
+APP="Managed Software Center Do Not Disturb.app"
+PREFLIGHT=msc-do-not-disturb.py
+MUNKI_DIR=/usr/local/munki
+MUNKIREPORT_PREFLIGHT="${MUNKI_DIR}/preflight"
+PREFLIGHT_D="${MUNKI_DIR}/preflight.d"
+
+sudo /bin/cp -r "/Library/Management/${TITLE}/${APP}" /Applications/
+
+if [ ! -f "${MUNKIREPORT_PREFLIGHT}" ]; then
+    sudo /bin/cp /Library/Management/${TITLE}/${PREFLIGHT} ${MUNKI_DIR}/preflight
+elif [ -f "${MUNKIREPORT_PREFLIGHT}" ]; then
+    if [ -d "${PREFLIGHT_D}" ]; then
+        sudo /bin/cp /Library/Management/${TITLE}/${PREFLIGHT} ${PREFLIGHT_D}/${PREFLIGHT}
+    else
+	    echo "Cannot install because there is an unrecognised preflight file"
+	    exit 1
+    fi
+fi
+
+sudo /bin/rm -rf /Library/Management/${TITLE}
+
+exit 0
