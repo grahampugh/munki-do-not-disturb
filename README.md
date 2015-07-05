@@ -35,7 +35,7 @@ directory. If you have both or neither, you are safe.
 It's most likely you'll want to distribute this as a self-service app in Munki. Run `munkiimport /path/to/MSC-Do-Not-Disturb.pkg` and edit the resulting pkginfo file: 
 the uninstall keys should be something like:
 
-```
+```xml
 	<key>uninstall_method</key>
 	<string>uninstall_script</string>
 	<key>uninstall_script</key>
